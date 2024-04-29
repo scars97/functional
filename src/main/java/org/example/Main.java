@@ -1,22 +1,24 @@
 package org.example;
 
-import java.time.LocalTime;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.function.IntFunction;
+import java.util.function.IntUnaryOperator;
+
 public class Main {
     public static void main(String[] args) {
-        String s = buildGreeting("성현");
-        System.out.println(s);
+        int result1 = add(2, 3);
+        System.out.println(result1);
+
+        IntUnaryOperator addTwo = curriedAdd(2).apply(3);
+        int result2 = addTwo.applyAsInt(4);
+        System.out.println(result2);
     }
 
-    public static String buildGreeting(String name) {
-        var now = LocalTime.now();
+    static int add(int x, int y) {
+        return x + y;
+    }
 
-        if (now.getHour() < 12) {
-            return "Good morning " + name;
-        } else {
-            return "Hello " + name;
-        }
+    static IntFunction<IntUnaryOperator> curriedAdd(int x) {
+        return y -> z -> x + y + z;
     }
 }
