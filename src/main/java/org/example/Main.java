@@ -1,9 +1,6 @@
 package org.example;
 
 
-import java.util.function.IntFunction;
-import java.util.function.IntUnaryOperator;
-
 public class Main {
     public static void main(String[] args) {
          Calculator adder = (a, b) -> a + b;
