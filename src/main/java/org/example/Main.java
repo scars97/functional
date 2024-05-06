@@ -3,13 +3,18 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-         Calculator adder = (a, b) -> a + b;
-
-        int calculate = adder.calculate(3, 5);
-        System.out.println(calculate);
+        capture();
     }
 
-    interface Calculator {
-        int calculate(int a, int b);
+    static void capture() {
+        int theAnswer = 43;
+
+        Runnable printAnswer = () -> System.out.println("the answer is " + theAnswer);
+
+        run(printAnswer);
+    }
+
+    static void run(Runnable r) {
+        r.run();
     }
 }
