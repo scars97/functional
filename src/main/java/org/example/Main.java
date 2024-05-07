@@ -3,18 +3,23 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-        capture();
+
+        HelloWorld helloWorld = new HelloWorld() {
+            @Override
+            public String sayHello(String name) {
+                return "hello, " + name + "!";
+            }
+        };
+
+        System.out.println(helloWorld.sayHello("성현"));
+
+        HelloWorld helloWorldLambda = name -> "hello, " + name + "!";
+
+        System.out.println(helloWorldLambda.sayHello("성현2"));
+
     }
 
-    static void capture() {
-        int theAnswer = 43;
-
-        Runnable printAnswer = () -> System.out.println("the answer is " + theAnswer);
-
-        run(printAnswer);
-    }
-
-    static void run(Runnable r) {
-        r.run();
+    interface HelloWorld {
+        String sayHello(String name);
     }
 }
