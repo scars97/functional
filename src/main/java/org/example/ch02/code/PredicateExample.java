@@ -1,6 +1,5 @@
 package org.example.ch02.code;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
