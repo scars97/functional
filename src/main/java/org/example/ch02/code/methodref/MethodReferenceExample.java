@@ -24,6 +24,8 @@ public class MethodReferenceExample {
 
         System.out.println(castToStr.apply("1"));
 
+        Function<String, String> newStringRef = String::new;
+        System.out.println(newStringRef.apply("asdf"));
 
     }
 }
