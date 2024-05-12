@@ -1,10 +1,10 @@
-package org.example.ch03;
+package org.example.ch03.functionalinterface;
 
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class FunctionalInterfaceEx {
+public class FunctionalEx {
 
     public static void main(String[] args) {
         // 데이터 변환
@@ -29,7 +29,6 @@ public class FunctionalInterfaceEx {
 
         String result = pipeline.apply(" hello ");
         System.out.println(result);
-
 
     }
 }
