@@ -1,4 +1,4 @@
-package org.example.ch03.functionalinterface;
+package org.example.ch03.code.functionalinterface;
 
 import java.util.List;
 import java.util.function.Function;
