@@ -1,4 +1,4 @@
-package org.example.ch02.code;
+package org.example.part01.ch02.code;
 
 import java.util.function.Function;
 

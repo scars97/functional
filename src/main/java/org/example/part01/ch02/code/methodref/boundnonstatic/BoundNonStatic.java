@@ -1,4 +1,4 @@
-package org.example.ch02.code.methodref.boundnonstatic;
+package org.example.part01.ch02.code.methodref.boundnonstatic;
 
 public class BoundNonStatic {
 

@@ -1,4 +1,4 @@
-package org.example.ch03.code;
+package org.example.part01.ch03.code;
 
 import java.util.Arrays;
 import java.util.List;

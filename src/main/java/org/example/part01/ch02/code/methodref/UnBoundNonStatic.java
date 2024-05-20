@@ -1,4 +1,4 @@
-package org.example.ch02.code.methodref;
+package org.example.part01.ch02.code.methodref;
 
 import java.util.function.Function;
 

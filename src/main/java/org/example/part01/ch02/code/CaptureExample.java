@@ -1,4 +1,4 @@
-package org.example.ch02.code;
+package org.example.part01.ch02.code;
 
 public class CaptureExample {
     public static void main(String[] args) {
