@@ -192,20 +192,20 @@ System.out.println(original);
 System.out.println(copy);
 ```
 
-**원시 타입과 객체 타입**
+### 원시 타입과 객체 타입
 - 객체 타입의 데이터는 변경 가능(mutable value)한 값인 반면, 원시 타입 데이터는 변경 불가능(immutable value)한 값이다.
 - 할당/재할당을 명령할 때 변수가 `참조하던 메모리 주소가 변경되는 것은 곧 변수에 할당된 원기 값이 변경 불가능한 값이기 때문이다.`
 - 원시 값 자체가 변경 가능한 값이라면 변수가 다른 메모리 주소를 참조할 필요 없이 해당 메모리에 저장된 값만 게속 변경함으로써 재할당을 수행할 수 있을 것이고, 불필요한 쓰레기 값도 생성되지 않을 것이다.
 - 따라서 변수 값을 변경하기 위해 원시 값을 재할당하면 새로운 메모리 공간을 확보하고 재할당한 값을 저장한 후, 변수가 참조하던 메모리 공간의 주소를 변경한다.
 
-**불변 수학 타입 (BigInteger, BigDecimal)**
+### 불변 수학 타입 (BigInteger, BigDecimal)
 - 정수와 소수점 계산을 더욱 안전하고 정확하게 처리한다.
 - 불변 수학 타입은 일반적인 오버헤드를 동반하는 객체이다. (높은 정밀도를 달성하기 위해 추가 메모리가 필요하다.)
 - 계산 속도가 제한 조건이 아닌 경우, BigDecimal 타입을 사용하는 것이 좋다.
 
-**Enum**
+### Enum
 
-**final 키워드**
+### final 키워드
 - 특정 상황에서의 불변성을 보장하지만 모든 상황에서 자료 구조를 불벼하게 만들지는 않는다.
   - final 클래스는 하위 클래스화될 수 없다.
   - final 메서드는 오버라이딩될 수 없다.
@@ -224,3 +224,39 @@ System.out.println(list.size()); // 2
 list = new LinkedList<>(); // 컴파일 실패
 ```
 - 람다 표현식에서는 final을 명시적으로 추가하지 않아도 참조가 effectively final인지 컴파일러가 자동으로 감지한다.
+
+### 레코드
+- 자바에서 클래스 작성시 보일러플레이트 코드가 필요하다. (getter, equals, hashcode 등)
+- 레코드는 반복적인 코드를 줄여주고, 간결하고 명확한 클래스 정의를 가능하게 한다.
+- 레코드의 모든 필드는 final로 선언되며, 객체 생성 후 변경할 수 없다.
+```java
+public class RecordEx {
+
+    public static void main(String[] args) {
+        RecordPerson recordPerson = new RecordPerson("성현", 28);
+        RecordPerson recordPerson2 = new RecordPerson("성현", 28);
+
+        System.out.println(recordPerson.name());
+        System.out.println(recordPerson.age());
+        System.out.println(recordPerson.equals(recordPerson2));
+    
+        Person person = new Person("성현", 28);
+        Person person2 = new Person("성현", 28);
+        System.out.println(person.equals(person2));
+    }
+
+    public record RecordPerson(String name, int age) {}
+
+    public static class Person {
+        private String name;
+        private int age;
+    
+        public Person(String name, int age) {
+          this.name = name;
+          this.age = age;
+        }
+    
+        // Getter 생략
+    }
+}
+```
