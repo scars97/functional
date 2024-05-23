@@ -238,11 +238,11 @@ public class RecordEx {
 
         System.out.println(recordPerson.name());
         System.out.println(recordPerson.age());
-        System.out.println(recordPerson.equals(recordPerson2));
+        System.out.println(recordPerson.equals(recordPerson2)); // true
     
         Person person = new Person("성현", 28);
         Person person2 = new Person("성현", 28);
-        System.out.println(person.equals(person2));
+        System.out.println(person.equals(person2)); // false
     }
 
     public record RecordPerson(String name, int age) {}
@@ -260,3 +260,26 @@ public class RecordEx {
     }
 }
 ```
+- 레코드를 사용한 객체 비교 : true / 일반 객체 비교 : false
+- 레코드를 사용한 객체는 getter, equals, toString 같은 보일러플레이트 코드를 자동으로 생성해준다.
+  - 여기서 equals와 hashCode 메서드를 재정의하여 객체 주소 값이 아닌 필드값을 비교한다.
+  - 일반 객체를 비교하여 true를 반환하고 싶다면 명시적으로 equals 메서드를 재정의해줘야 한다.
+```java
+@Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Person person = (Person) o;
+    return age == person.age && Objects.equals(name, person.name);
+}
+
+@Override
+public int hashCode() {
+    return Objects.hash(name, age);
+}
+```
+
+---
+
+- 기존의 가변 자료 구조를 불변 자료 구조로 전환하는 것은 많은 리팩토링이나 개념적 재설계가 필요하다.
+- 일반적인 관행에 따라 `점진적`으로 불변성을 적용해야 한다.
