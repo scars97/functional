@@ -19,6 +19,14 @@ public class LocalRecord {
         for (String s : result) {
             System.out.println(s);
         }
+        // Music3
+        // CheekToCheek
+        // Christian Mcbride
+        // Music4
+        // One Not Samba
+        // Music5
+        // Jazz Crime
+        // Joshua Redman
     }
 
 

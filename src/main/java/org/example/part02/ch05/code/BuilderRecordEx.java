@@ -4,7 +4,10 @@ package org.example.part02.ch05.code;
 public class BuilderRecordEx {
 
     public static void main(String[] args) {
-        User user = new User.UserBuilder().id(1L).username("성현").build();
+        User user = User.builder()
+                        .id(1L)
+                        .username("성현")
+                        .build();
 
         System.out.println(user.id());
         System.out.println(user.username());
@@ -12,7 +15,11 @@ public class BuilderRecordEx {
 
     public record User(Long id, String username) {
 
-        public static final class UserBuilder {
+        public static UserBuilder builder() {
+            return new UserBuilder();
+        }
+
+        public static class UserBuilder {
             private Long id;
             private String username;
 
