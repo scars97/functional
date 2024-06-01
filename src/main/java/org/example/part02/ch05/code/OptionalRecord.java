@@ -6,16 +6,19 @@ import java.util.Optional;
 public class OptionalRecord {
 
     public static void main(String[] args) {
-        User user = new User("userId", "성현", (String) null);
-        System.out.println(user);
+        User user = new User("userId", "성현", null);
+        System.out.println(user.email);
 
     }
 
-    public record User(String id, String name, Optional<String> password) {
+    public record User(String id, String name, Optional<String> email) {
 
-        public User(String id, String name, String password) {
-            this(id, name, Optional.ofNullable(password));
-
+        public User {
+            Objects.requireNonNull(email, "Optional<String> group must not be null");
         }
+
+        /*public User(String id, String name, String email) {
+            this(id, name, Optional.ofNullable(email));
+        }*/
     }
 }
