@@ -14,7 +14,7 @@ public class StreamSelectEx {
         // filter -> 결과가 true인 해당 요소는 선택된다.
         //stream.filter(Shape::hasCorners).forEach(System.out::println);
 
-        // TODO dropWhile -> true가 될 때까지 통과하는 모든 요소를 폐기한다.
+        // dropWhile -> Predicate가 false가 될 때까지 통과하는 모든 요소를 폐기한다. (false 부터 주워담는다.)
         //stream.dropWhile(Shape::hasCorners).forEach(System.out::println);
 
         //takeWhile -> false가 될 때까지 요소를 선택한다.
