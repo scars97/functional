@@ -17,11 +17,14 @@ public class DownStreamCollectorEx {
         );
 
         Map<String, List<String>> peopleByCity = people.stream()
+                // 사람들을 도시별로 그룹화 -> groupingBy은 상위 컬렉터
                 .collect(Collectors.groupingBy(
                         Person::getCity,
+                        // 그룹 내에서 이름을 리스트로 수집 -> mapping은 다운스트림 사용된다.
                         Collectors.mapping(Person::getName, Collectors.toList())
                 ));
 
         System.out.println(peopleByCity);
+        // {New York=[John, Jane, Gary], Los Angeles=[Jake, Mary]}
     }
 }
