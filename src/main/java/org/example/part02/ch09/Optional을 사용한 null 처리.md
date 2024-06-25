@@ -60,8 +60,74 @@ record User(long id, String firstName, String lastName) {
   - com.google.code.findbugs:jsr305:x.x.x
 - 어노테이션으로 간편한 null 검사를 제공하지만 도구에 과도하게 의존할 경우, 해당 도구 없이는 프로그램이 제대로 동작하지 않을 수 있다.
 
+---
+
 ## Optional
 - null이 될 수 있는 값을 담은 상자
 - 상자는 그 내부의 값을 보호하는 래퍼의 역할을 한다.
 - Optional은 래핑하는 것 이상으로, 값의 존재 여부에 따라 호출체인을 만들어낼 수 있으며 체인 내에 값이 없는 경우 대체 값을 만들어 반환할 수 있다.
 - 스트림처럼 부가적인 래퍼는 오버헤드를 발생시킬 수 있지만 기존의 null 처리 작업 흐름을 더욱 간결하고 직관적으로 표현할 수 있다.
+
+## Optional 파이프라인 구축
+
+### Optional 생성
+- Optional 타입에는 public 생성자는 제공하지 않는다.
+- 대신 새로운 인스턴스를 생성하기 위한 정적 팩토리 메서드를 제공한다.
+
+**Optional.ofNullable(T value)**
+- 값이 null 일 가능성이 있는 경우 null값을 허용하는 새 인스턴스를 만든다.
+
+**Optional.of(T value)**
+- 반드시 값이 있어야 하는 경우 사용된다.
+- 상황에따라 중요한 예외 상황을 간과했거나 외부 메서드의 반환 값이 변경되어 null을 반환하게 될 수도 있다.
+  - of 메서드 사용 시 값이 null인지 확인하고 그렇지 않으면 NullPointException을 발생시킨다.
+  - 예기치 않은 동작 변화에도 유연한 대응이 가능하다.
+
+**Optional.empty()**
+- 값이 비어 있다는 것을 이미 알고 있다면 empty 메서드를 사용할 수 있다.
+
+Optional은 런타임에서 동작하는 특성을 가지며, 객체 생성과 관련된 오버헤드가 발생한다.
+
+이 부분을 최소화하기 위해 값의 유무를 확인할 수 있는 메서드를 제공한다.
+```java
+// 단순히 값의 유무를 확인하는 메서드
+boolean isPresent();
+boolean isEmpty();
+
+// 값이 존재할 때만 주어진 작업을 수행한다.
+// null은 허용되지 않으며 NullPointException을 발생시킨다.
+void ifPresent(...);
+void ifPresentOrElse(...);
+```
+```java
+String value = "null";
+Optional<String> maybeValue = Optional.ofNullable(value);
+
+if (maybeValue.isPresent()) {
+    String result = maybeValue.orElseThrow();
+    System.out.println(result); // null
+} else {
+    System.out.println("Not Found");
+}
+```
+
+### 필터링 매핑
+- filter : 값이 존재하고 주어진 조건에 부합하는 경우 this를 반환
+- map : 제공된 매퍼함수로 값을 변환하여 새로운 null 값이 허용된 Optional 반환
+- flatMap : Optional\<U>를 반환하는 매핑 함수를 사용할 때 적합하다. ex) map
+  - 반환된 Optional\<U>에 map 연산을 사용하면 Optional<Optional\<U>>가 된다.
+  - 불필요하게 중첩된 Optional 생성을 피할 수 있다.
+
+### 대체 값 가져오기
+- Optional은 null값을 안전하게 래핑하지만 실제값(대체값)이 필요할 수 있다.
+```java
+// 안전 검사 수행 x
+T get();
+
+// 값이 없는 경우 대체값 제공
+T orElse();
+T orElseGet(...);
+
+// 값이 없는 경우 예외 발생
+T orElseThrow(...);
+```
