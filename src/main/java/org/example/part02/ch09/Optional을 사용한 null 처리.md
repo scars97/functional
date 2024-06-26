@@ -131,3 +131,44 @@ T orElseGet(...);
 // 값이 없는 경우 예외 발생
 T orElseThrow(...);
 ```
+
+## Optional 사용 주의 사항
+
+### Optional은 일반적인 타입이다.
+- Optional은 null 참조 문제를 피하려고 도입된 타입이지만, Optional 객체 자체가 null일 수 있는 경우에는 여전히 NullPointerException이 발생할 수 있다. 
+- Optional을 생성하거나 사용할 때 null을 전달하는 경우에 발생할 수 있습니다.
+```java
+Optinoal<String> optionalString  = null;
+
+try {
+    // NullPointerException 발생
+    optionalString.ifPresent(s -> System.out.println(s.length()));
+} catch (NullPointerException e) {
+    System.out.println("NullPointerException 발생: " + e.getMessage());
+}
+```
+- Optional을 사용하고자 한다면 어떠한 경우에도 null을 반환해서는 안된다.
+
+### 식별 관련 연산과는 어울리지 않는다.
+- Optional, String, Integer 등. 값을 기반으로 하는 타입(value-based type)들은 참조 동일성보다는 값의 동등성에 초점을 맞춘다.
+- 이런 타입들은 대체로 불변 객체로 설계되어 객체의 상태가 변하지 않음을 보장할 순 있지만 식별자를 다룰 때는 적합하지 않다.
+
+### 성능 오버헤드
+- 간단한 null 검사를 위해 추가적인 연산 없이 단순 Optional을 사용하는 것은 그다지 의미가 없다.
+  - 단순 null 검사로 인해 새로운 Optional 인스턴스가 필요하며 각 메서드 호출마다 새로운 스택 프레임을 생성하기 때문
+- 삼항 연산자나 직접적인 null 검사를 사용하는 것이 더 좋을 수 있다.
+  - 인스턴스 생성과 메서드 호출 횟수를 줄이는 것이 바람직
+- 성능 향상과 코드의 안정성, 명료성 사이에는 타협이 필요하다.
+
+### 컬렉션에 대한 고려 사항
+- 컬렉션 기반의 타입들은 이미 내부값의 부재를 표현할 수 있는 기능을 갖고 있다.
+  - isEmpty() ...
+- 컬렉션 또한 값들을 담는 상자의 역할을 하기 때문에 Optional로 래핑하게 된다면 처리해야 할 계층이 늘어난다.
+- 빈컬렉션을 사용하면 NullPointException 가능성을 제거할 수 있다.
+  - 빈컬렉션을 사용하도록 하면 Optional을 사용하는 것과 동일한 효과를 얻을 수 있다.
+- 컬렉션에 대해 절대적으로 null을 사용하지 말아야 한다.
+```java
+// 비권장
+List<String> isNull = null;
+isNull.toString(); // NullPointException
+```
