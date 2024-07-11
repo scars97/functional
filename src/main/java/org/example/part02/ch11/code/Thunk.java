@@ -8,6 +8,8 @@ public class Thunk<T> implements Supplier<T> {
 
     private T result;
 
+    private int count;
+
     public Thunk(Supplier<T> expression) {
         this.expression = expression;
     }
@@ -15,6 +17,7 @@ public class Thunk<T> implements Supplier<T> {
     @Override
     public T get() {
         if (this.result == null) {
+            count++;
             this.result = this.expression.get();
         }
         return this.result;
@@ -28,4 +31,7 @@ public class Thunk<T> implements Supplier<T> {
         return new Thunk<T>(expression);
     }
 
+    public int getCount() {
+        return count;
+    }
 }

@@ -4,7 +4,7 @@ public class ThunkEx {
 
     public static void main(String[] args) {
 
-        Thunk<String> expensiveOperation = Thunk.of(() -> performExpensiveOperation());
+        Thunk<String> expensiveOperation = Thunk.of(ThunkEx::performExpensiveOperation);
 
         System.out.println("Before calling the thunk");
 
