@@ -16,7 +16,9 @@ public class NodeEx {
                                 Node.of("9"))));
 
         //traverseIterative(root);
-        traverseRecursion(root);
+        //traverseRecursion(root);
+
+        root.traverse(System.out::print);
     }
 
     static void traverseIterative(Node<String> root) {
